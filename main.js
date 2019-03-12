@@ -14,6 +14,10 @@ function distance(p1, p2) {
   return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y))
 }
 
+function dotProduct(v1, v2) {
+  return v1.x * v2.x + v1.y * v2.y
+}
+
 function barycenter(positions) {
   if (!positions.length) return null
 
@@ -99,19 +103,21 @@ function draw() {
 
 function update() {
   birds.forEach(bird => {
-    const flockBirdsPositions = []
-    const nearBirdsPositions = []
+    const flockBirdsPositions = [] // Birds to follow
+    const nearBirdsPositions = [] // Birds to get away from
 
     birds.forEach(b => {
       if (b.id === bird.id) return
       
+      // Birds to follow must be in half a circle in front of the bird (d < flockingDistance, dotProduct1 > 0)
+      // and go in the same direction as it (dotProduct2 > 0)
       const diffPosition = normalize({
         x: b.position.x - bird.position.x,
         y: b.position.y - bird.position.y,
       })
       
-      const dotProduct1 = bird.speed.x * diffPosition.x + bird.speed.y * diffPosition.y
-      const dotProduct2 = bird.speed.x * b.speed.x + bird.speed.y * b.speed.y
+      const dotProduct1 = dotProduct(bird.speed, diffPosition)
+      const dotProduct2 = dotProduct(bird.speed, b.speed)
       const d = distance(b.position, bird.position)
 
       if (d < flockingDistance && dotProduct1 > 0 && dotProduct2 > 0) flockBirdsPositions.push(b.position)
@@ -141,6 +147,7 @@ function update() {
       y: bird.position.y + bird.speed.y,
     }
 
+    // Edges collisions
     if (bird.position.x < -birdRadius) bird.position.x = width + birdRadius
     if (bird.position.x > width + birdRadius) bird.position.x = -birdRadius
     if (bird.position.y < -birdRadius) bird.position.y = height + birdRadius
