@@ -1,0 +1,23 @@
+{
+  "name": "flock-of-birds",
+  "version": "1.0.0",
+  "description": "A piece of art",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dherault/flock-of-birds.git"
+  },
+  "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dherault/flock-of-birds/issues"
+  },
+  "homepage": "https://github.com/dherault/flock-of-birds#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-dherault": "^1.0.9"
+  }
+}

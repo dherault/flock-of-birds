@@ -1,10 +1,8 @@
 const canvas = document.getElementById('canvas')
 const _ = canvas.getContext('2d')
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-
-const { width, height } = canvas
+const width = canvas.width = window.innerWidth
+const height = canvas.height = window.innerHeight
 
 function randomRange(min, max) {
   return Math.random() * (max - min) + min
@@ -108,14 +106,14 @@ function update() {
 
     birds.forEach(b => {
       if (b.id === bird.id) return
-      
+
       // Birds to follow must be in half a circle in front of the bird (d < flockingDistance, dotProduct1 > 0)
       // and go in the same direction as it (dotProduct2 > 0)
       const diffPosition = normalize({
         x: b.position.x - bird.position.x,
         y: b.position.y - bird.position.y,
       })
-      
+
       const dotProduct1 = dotProduct(bird.speed, diffPosition)
       const dotProduct2 = dotProduct(bird.speed, b.speed)
       const d = distance(b.position, bird.position)
@@ -155,10 +153,10 @@ function update() {
   })
 }
 
-function drawStep() {
+function step() {
   draw()
   update()
-  requestAnimationFrame(drawStep)
+  requestAnimationFrame(step)
 }
 
-requestAnimationFrame(drawStep)
+requestAnimationFrame(step)
